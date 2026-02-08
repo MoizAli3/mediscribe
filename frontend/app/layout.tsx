@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MediScribe AI",
-  description: "AI Medical Scribe",
+  title: "PulseScript AI", // <--- CHANGE HERE
+  description: "Advanced AI Medical Assistant",
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body className={inter.className}>{children}</body>
     </html>
   );

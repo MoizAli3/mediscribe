@@ -99,7 +99,7 @@ export default function AuthPage() {
             {isLogin ? "Welcome Back" : "Create Account"}
           </h1>
           <p className="text-slate-500 text-sm mt-1">
-            {isLogin ? "Access your medical dashboard" : "Join MediScribe AI today"}
+            {isLogin ? "Access your medical dashboard" : "Join PulseScript AI today"}
           </p>
         </div>
 

@@ -193,3 +193,29 @@ async def analyze_consultation(
         if os.path.exists(temp_filename): os.remove(temp_filename)
         print(f"❌ Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/history")
+def get_history(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    # Fetch all consultations for this doctor, ordered by newest first
+    consultations = db.query(Consultation).filter(
+        Consultation.doctor_id == current_user.id
+    ).order_by(Consultation.date.desc()).all()
+    
+    # Parse the JSON strings back to lists/objects for the frontend
+    history_data = []
+    for c in consultations:
+        history_data.append({
+            "id": c.id,
+            "date": c.date,
+            "diagnosis": c.diagnosis,
+            "symptoms": json.loads(c.symptoms),
+            "treatment": c.treatment,
+            "prescriptions": json.loads(c.prescriptions),
+            "safety_warning": c.safety_warning
+        })
+        
+    return history_data

@@ -166,7 +166,10 @@ export default function MedicalDashboard() {
             <div className="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-600/20">
               <Stethoscope className="text-white w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">MediScribe<span className="text-blue-600">AI</span></h1>
+            {/* NEW NAME HERE */}
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+              PulseScript<span className="text-blue-600">AI</span>
+            </h1>
           </div>
           
           <div className="flex items-center gap-6">
@@ -419,7 +422,9 @@ export default function MedicalDashboard() {
         <div className="hidden print:block print:p-8 bg-white text-black h-screen">
           <div className="flex justify-between items-start border-b-2 border-slate-800 pb-6 mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">MediScribe<span className="text-blue-600">AI</span> Clinic</h1>
+              <h1 className="text-3xl font-bold text-slate-900">
+                PulseScript<span className="text-blue-600">AI</span> Clinic
+              </h1>
               <p className="text-sm text-slate-500 mt-2">123 Medical Center Drive, Suite 100</p>
               <p className="text-sm text-slate-500">New York, NY 10001</p>
               <p className="text-sm text-slate-500">Ph: (555) 123-4567</p>
