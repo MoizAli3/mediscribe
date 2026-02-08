@@ -80,9 +80,3 @@ npm install
 
 # Run the Development Server
 npm run dev
-
-Method,Endpoint,Description
-POST,/register,Register a new doctor
-POST,/token,Login & Get Access Token
-POST,/analyze-consultation,Upload Audio & Get AI Analysis
-GET,/history,Fetch past patient records
