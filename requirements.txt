@@ -1,8 +1,0 @@
-fastapi
-sqlalchemy
-google-generativeai
-python-dotenv
-python-multipart
-python-jose
-passlib
-requests
