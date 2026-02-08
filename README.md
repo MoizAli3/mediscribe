@@ -39,7 +39,7 @@ In many regions (like India & Pakistan), doctors consult patients in local langu
 | **Frontend** | Next.js 14 (App Router), Tailwind CSS, Lucide React, Recharts |
 | **Backend** | FastAPI (Python), Uvicorn |
 | **Database** | SQLite (SQLAlchemy ORM) |
-| **AI Model** | Google Gemini 1.5 Flash (Generative AI) |
+| **AI Model** | Google Gemini 2.5 Flash (Generative AI) |
 | **Authentication** | JWT (OAuth2 Password Bearer) |
 | **HTTP Client** | Axios |
 
@@ -47,7 +47,7 @@ In many regions (like India & Pakistan), doctors consult patients in local langu
 
 ## ⚙️ Installation & Setup
 
-Follow these steps to run the project locally.
+Follow these simple steps to run the project locally.
 
 ### 1️⃣ Clone the Repository
 ```bash
@@ -56,20 +56,18 @@ cd mediscribe
 
 cd backend
 
-# Create Virtual Environment
+# Create Virtual Environment (Optional but Recommended)
 python -m venv venv
-
-# Activate Environment
 # Windows:
 venv\Scripts\activate
 # Mac/Linux:
 source venv/bin/activate
 
-# Install Dependencies
-pip install -r requirements.txt
+# Install All Dependencies directly
+pip install fastapi uvicorn sqlalchemy google-generativeai python-dotenv python-multipart python-jose[cryptography] passlib[bcrypt]
 
 GEMINI_API_KEY=your_google_gemini_api_key_here
-SECRET_KEY=your_secret_key_for_jwt_generation
+SECRET_KEY=supersecretkey123
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 
@@ -82,3 +80,9 @@ npm install
 
 # Run the Development Server
 npm run dev
+
+Method,Endpoint,Description
+POST,/register,Register a new doctor
+POST,/token,Login & Get Access Token
+POST,/analyze-consultation,Upload Audio & Get AI Analysis
+GET,/history,Fetch past patient records
