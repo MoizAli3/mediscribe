@@ -1,82 +1,142 @@
-# 🏥 PulseScript AI - Intelligent Medical Scribe
+# 🩺 MediScribe  
+### Intelligent Medical Scribe & Clinical Safety Assistant
 
-> **Bridging the gap between Doctor's voice and Digital Records.**
-> *Transforming Multilingual Consultations into Professional Medical Prescriptions in Real-Time.*
+![Status](https://img.shields.io/badge/Status-Beta_Live-success?style=for-the-badge)
+![AI](https://img.shields.io/badge/AI-Gemini_1.5_Pro-blue?style=for-the-badge)
+![Stack](https://img.shields.io/badge/Stack-FastAPI_+_Next.js-purple?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-orange?style=for-the-badge)
 
-[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/MoizAli3/mediscribe.git)
-[![Tech Stack](https://img.shields.io/badge/Tech-Next.js%20%7C%20FastAPI%20%7C%20Gemini%20AI-green)]()
-
----
-
-## 🚀 The Problem
-In many regions (like India & Pakistan), doctors consult patients in local languages (**Hindi, Urdu, Hinglish**), but medical records must be maintained in **Global English Standards**.
-- Manual data entry during consultations breaks the doctor-patient connection.
-- Language barriers lead to documentation errors.
-- Lack of immediate drug interaction checks risks patient safety.
-
-## 💡 The Solution
-**PulseScript AI** is a smart medical assistant that listens to the doctor-patient conversation, understands mixed languages (Hindi/Urdu + English), and automatically generates a structured, professional **Clinical Note & Prescription** in English.
+> **Bridging the gap between a doctor’s voice and digital medical records.**  
+> MediScribe converts real-world multilingual consultations (Urdu / Hindi / English) into structured, professional clinical notes and prescriptions — with built-in patient safety checks.
 
 ---
 
-## ✨ Key Features
+## 🚨 The Problem
 
-- 🎙️ **Multilingual Voice Recognition:** Understands Hindi, Urdu, and English (Hinglish) seamlessly.
-- 📝 **Auto-Translation & Transcription:** Converts local language audio (e.g., *"Bukhar hai"*) into standard Medical English terms (*"Fever"*).
-- 💊 **Smart Prescription Generation:** Extracts medicines, dosage, frequency, and duration automatically.
-- ⚠️ **AI Safety Guard:** Detects **Drug-Drug Interactions** and instantly warns the doctor if a combination is unsafe.
-- 📂 **Patient History:** Securely stores and retrieves past consultations for follow-ups.
-- 🖨️ **One-Click Print:** Generates a professional PDF-ready format for printing prescriptions.
-- 📊 **Analytics Dashboard:** Visualizes patient trends and weekly clinic statistics.
-- 🌗 **Modern UI:** Clean, responsive interface built with Next.js & Tailwind CSS.
+In high-volume clinics across South Asia (Pakistan & India), doctors face serious operational and safety challenges:
+
+1. **Language Mismatch**  
+   Patients speak Urdu, Hindi, or Hinglish — but medical records must be written in formal English.
+
+2. **Manual Data Entry**  
+   Typing prescriptions wastes time and reduces doctor–patient interaction.
+
+3. **Medication Safety Risks**  
+   Drug-Drug Interaction checks are often skipped due to time pressure, leading to preventable medical errors.
+
+---
+
+## 💡 The Solution — MediScribe
+
+**MediScribe is not just a transcriber.**  
+It is an **AI clinical assistant** that understands conversation context, removes irrelevant speech, translates medical meaning, structures prescriptions, and actively warns about unsafe drug combinations.
+
+---
+
+## 🌟 Key Features
+
+| Feature | Description |
+|------|------------|
+| 🎙️ **Multilingual Audio Understanding** | Handles mixed **Urdu, Hindi, Hinglish & English** seamlessly |
+| 🧠 **Medical Context Translation** | Converts local terms like *“Bukhar”* → **Fever**, *“Saans ki takleef”* → **Dyspnea** |
+| 🛡️ **AI Drug Safety Guard** | **Automatically detects Drug-Drug Interactions before finalizing prescription** |
+| 💊 **Structured Prescription Output** | Medication name, dosage, frequency & duration in clean JSON |
+| 📂 **Patient History Tracking** | Secure storage & retrieval of past consultations |
+| ⚡ **Low-Latency Processing** | Powered by **Google Gemini 1.5 Pro** |
+
+---
+
+## 📸 Application Preview
+
+| Doctor Dashboard | Real-Time Prescription Analysis |
+|---|---|
+| ![Dashboard](https://via.placeholder.com/600x300?text=Doctor+Dashboard) | ![Analysis](https://via.placeholder.com/600x300?text=Prescription+Analysis) |
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Component | Technology |
-| :--- | :--- |
-| **Frontend** | Next.js 14 (App Router), Tailwind CSS, Lucide React, Recharts |
-| **Backend** | FastAPI (Python), Uvicorn |
-| **Database** | SQLite (SQLAlchemy ORM) |
-| **AI Model** | Google Gemini 2.5 Flash (Generative AI) |
-| **Authentication** | JWT (OAuth2 Password Bearer) |
-| **HTTP Client** | Axios |
+### Frontend
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide React
+- **State Management:** React Hooks & Context API
+
+### Backend
+- **Framework:** FastAPI (Python)
+- **Server:** Uvicorn
+- **Database:** SQLite (SQLAlchemy ORM)
+- **Authentication:** JWT (OAuth2)
+
+### Artificial Intelligence
+- **LLM:** Google Gemini 1.5 Pro
+- **Technique:** System Prompting for
+  - Medical translation
+  - Clinical summarization
+  - JSON extraction
+  - Safety rule enforcement
 
 ---
 
-## ⚙️ Installation & Setup
+## ⚙️ Installation & Local Setup
 
-Follow these simple steps to run the project locally.
-
-### 1️⃣ Clone the Repository
+### 1️⃣ Clone Repository
 ```bash
-git clone [https://github.com/MoizAli3/mediscribe.git](https://github.com/MoizAli3/mediscribe.git)
+git clone https://github.com/MoizAli3/mediscribe.git
 cd mediscribe
-
+```
+### 2️⃣ Backend Setup (FastAPI)
 cd backend
 
-# Create Virtual Environment (Optional but Recommended)
+##### Create virtual environment
+```
 python -m venv venv
-# Windows:
+
+# Activate (Windows)
 venv\Scripts\activate
-# Mac/Linux:
+
+# Activate (Linux / macOS)
 source venv/bin/activate
 
-# Install All Dependencies directly
+# Install dependencies
 pip install fastapi uvicorn sqlalchemy google-generativeai python-dotenv python-multipart python-jose[cryptography] passlib[bcrypt]
 
-GEMINI_API_KEY=your_google_gemini_api_key_here
-SECRET_KEY=supersecretkey123
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-
+# Run server
 uvicorn main:app --reload
+```
 
+###### 🔑 Environment Variables
+Create a .env file inside /backend:
+```
+GEMINI_API_KEY=your_api_key_here
+```
+### 3️⃣ Frontend Setup (Next.js)
+Open a new terminal:
+```
 cd frontend
 
-# Install Dependencies
 npm install
-
-# Run the Development Server
 npm run dev
+```
+### 4️⃣ Access the Application
+```
+http://localhost:3000
+```
+
+## 🧠 System Architecture
+
+```mermaid
+graph TD
+    A[Doctor Speaks Urdu/Hindi] -->|Audio| B[Next.js Frontend]
+    B -->|Upload| C[FastAPI Backend]
+    C -->|LLM Call| D[Gemini 1.5 Pro]
+    D -->|Processed Output| C
+    C -->|Drug Safety Check| C
+    C -->|Store| E[(SQLite Database)]
+    C -->|Response| B
+    B -->|UI Render| F[Prescription View]
+```
+# 🤝 Contributors
+
+- **Moiz Ali** — Backend Architecture, Frontend & AI Logic  
+- **Hamza Naseem** — Backend  Engineering & Agentic AI Framework 
