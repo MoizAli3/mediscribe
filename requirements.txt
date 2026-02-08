@@ -4,6 +4,6 @@ sqlalchemy
 google-generativeai
 python-dotenv
 python-multipart
-python-jose[cryptography]
-passlib[bcrypt]
+python-jose
+passlib
 requests
