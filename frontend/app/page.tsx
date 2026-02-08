@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Mic, Square, Activity, Pill, Stethoscope, Loader2, FileText, ChevronRight, LogOut, Printer, AlertTriangle, TrendingUp } from "lucide-react";
+import { Mic, Square, Activity, Pill, Stethoscope, Loader2, FileText, ChevronRight, LogOut, Printer, AlertTriangle, TrendingUp, History, Clock, X } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -17,13 +17,16 @@ const graphData = [
 ];
 
 export default function MedicalDashboard() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [data, setData] = useState<any>(null);
   const [user, setUser] = useState({ name: "", email: "" });
   
-  // NEW: Page Loading State to prevent flickering
-  const [isPageLoading, setIsPageLoading] = useState(true); 
+  // History States
+  const [showHistory, setShowHistory] = useState(false);
+  const [historyList, setHistoryList] = useState<any[]>([]);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -31,38 +34,54 @@ export default function MedicalDashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    
     if (!token) {
-      // Agar token nahi hai, to Login par bhejo
       router.push("/login");
     } else {
-      // Agar token hai, to data load karo aur page dikhao
       const name = localStorage.getItem("userName");
       const email = localStorage.getItem("userEmail");
       setUser({ 
         name: name || "Doctor", 
         email: email || "General Practice" 
       });
-      setIsPageLoading(false); // Stop loading
+      setIsAuthenticated(true);
     }
   }, [router]);
 
-  // --- SHOW LOADING SCREEN UNTIL AUTH CHECK IS DONE ---
-  if (isPageLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
-      </div>
-    );
-  }
+  const fetchHistory = async () => {
+    setIsLoadingHistory(true);
+    setShowHistory(true);
+    try {
+      const token = localStorage.getItem("token");
+      // REPLACE URL IF DEPLOYED
+      const res = await axios.get("http://localhost:8000/history", {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      setHistoryList(res.data);
+    } catch (error) {
+      toast.error("Failed to load history");
+    } finally {
+      setIsLoadingHistory(false);
+    }
+  };
 
-  // --- REST OF YOUR DASHBOARD CODE ---
+  const loadFromHistory = (record: any) => {
+    setData({
+        diagnosis: record.diagnosis,
+        patient_symptoms: record.symptoms,
+        treatment_plan: record.treatment,
+        prescriptions: record.prescriptions,
+        safety_warning: record.safety_warning
+    });
+    setShowHistory(false);
+    toast.success("Past record loaded!");
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
     localStorage.removeItem("userEmail");
     toast("Logged out successfully", { icon: "👋" });
-    setTimeout(() => router.push("/login"), 500);
+    router.push("/login");
   };
 
   const handlePrint = () => {
@@ -74,16 +93,13 @@ export default function MedicalDashboard() {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorderRef.current = new MediaRecorder(stream);
       chunksRef.current = [];
-      
       mediaRecorderRef.current.ondataavailable = (e) => {
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
-
       mediaRecorderRef.current.onstop = async () => {
         const audioBlob = new Blob(chunksRef.current, { type: "audio/mp3" });
         await handleUpload(audioBlob);
       };
-
       mediaRecorderRef.current.start();
       setIsRecording(true);
       toast("Recording started...", { icon: "🎙️" });
@@ -104,14 +120,12 @@ export default function MedicalDashboard() {
   const handleUpload = async (blob: Blob) => {
     setIsProcessing(true);
     const loadingToast = toast.loading("Analyzing consultation with AI...");
-
     const formData = new FormData();
     formData.append("file", blob, "recording.mp3");
 
     try {
       const token = localStorage.getItem("token");
-      
-      // CHANGE THIS URL IF DEPLOYED
+      // REPLACE URL IF DEPLOYED
       const res = await axios.post("http://localhost:8000/analyze-consultation", formData, {
         headers: { "Authorization": `Bearer ${token}` }
       });
@@ -124,15 +138,22 @@ export default function MedicalDashboard() {
       } else {
         toast.success("Analysis Complete!");
       }
-      
     } catch (error) {
-      console.error(error);
       toast.dismiss(loadingToast);
       toast.error("Failed to analyze audio.");
     } finally {
       setIsProcessing(false);
     }
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 gap-4">
+        <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
+        <p className="text-slate-500 font-medium animate-pulse">Verifying Access...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
@@ -149,6 +170,14 @@ export default function MedicalDashboard() {
           </div>
           
           <div className="flex items-center gap-6">
+            <button 
+              onClick={fetchHistory}
+              className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 shadow-sm transition-all"
+            >
+              <History className="w-4 h-4" />
+              <span className="text-sm font-medium">History</span>
+            </button>
+
             <div className="hidden md:flex items-center gap-3 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm">
               <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm">
                 {user.name.charAt(0)}
@@ -327,6 +356,65 @@ export default function MedicalDashboard() {
         </main>
       </div>
 
+      {/* --- HISTORY SLIDEOVER / MODAL --- */}
+      {showHistory && (
+        <div className="fixed inset-0 bg-slate-900/50 z-50 flex justify-end transition-opacity print:hidden">
+          <div className="bg-white w-full max-w-md h-full shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-right duration-300">
+            <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <Clock className="w-5 h-5 text-blue-600" />
+                Patient History
+              </h2>
+              <button 
+                onClick={() => setShowHistory(false)}
+                className="p-2 hover:bg-slate-200 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-slate-500" />
+              </button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              {isLoadingHistory ? (
+                <div className="flex justify-center py-10">
+                   <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                </div>
+              ) : historyList.length === 0 ? (
+                <p className="text-center text-slate-500 mt-10">No past records found.</p>
+              ) : (
+                historyList.map((record: any) => (
+                  <div 
+                    key={record.id} 
+                    onClick={() => loadFromHistory(record)}
+                    className="p-4 rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-md cursor-pointer transition-all bg-white group"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="font-bold text-slate-900">{record.diagnosis}</span>
+                      <span className="text-xs text-slate-400">
+                        {new Date(record.date).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <div className="flex gap-2 mb-2">
+                       {record.symptoms.slice(0, 3).map((s: string, i: number) => (
+                         <span key={i} className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
+                           {s}
+                         </span>
+                       ))}
+                       {record.symptoms.length > 3 && (
+                         <span className="text-xs text-slate-400">+{record.symptoms.length - 3}</span>
+                       )}
+                    </div>
+                    <div className="text-xs text-blue-600 font-semibold group-hover:underline flex items-center gap-1">
+                      View Details <ChevronRight className="w-3 h-3" />
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- PRINT TEMPLATE --- */}
       {data && (
         <div className="hidden print:block print:p-8 bg-white text-black h-screen">
           <div className="flex justify-between items-start border-b-2 border-slate-800 pb-6 mb-8">

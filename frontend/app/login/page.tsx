@@ -9,20 +9,19 @@ import toast, { Toaster } from "react-hot-toast";
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [isPageLoading, setIsPageLoading] = useState(true); // Page Loading State
+  const [isPageLoading, setIsPageLoading] = useState(true);
 
   const [fullName, setFullName] = useState(""); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  // --- CHECK IF ALREADY LOGGED IN ---
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      router.push("/"); // Agar login hai to Dashboard pe bhejo
+      router.push("/");
     } else {
-      setIsPageLoading(false); // Agar login nahi hai to Form dikhao
+      setIsPageLoading(false);
     }
   }, [router]);
 
@@ -34,7 +33,6 @@ export default function AuthPage() {
 
     try {
       if (isLogin) {
-        // --- LOGIN LOGIC ---
         const formData = new FormData();
         formData.append("username", email);
         formData.append("password", password);
@@ -55,7 +53,6 @@ export default function AuthPage() {
         setTimeout(() => router.push("/"), 1000);
 
       } else {
-        // --- SIGNUP LOGIC ---
         await axios.post("http://localhost:8000/register", { 
           email, 
           password,
@@ -80,7 +77,6 @@ export default function AuthPage() {
     }
   };
 
-  // --- SHOW LOADER WHILE CHECKING TOKEN ---
   if (isPageLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
