@@ -2,7 +2,7 @@
 ### Intelligent Medical Scribe & Clinical Safety Assistant
 
 ![Status](https://img.shields.io/badge/Status-Beta_Live-success?style=for-the-badge)
-![AI](https://img.shields.io/badge/AI-Gemini_1.5_Pro-blue?style=for-the-badge)
+![AI](https://img.shields.io/badge/AI-Gemini_3-blue?style=for-the-badge)
 ![Stack](https://img.shields.io/badge/Stack-FastAPI_+_Next.js-purple?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-orange?style=for-the-badge)
 
