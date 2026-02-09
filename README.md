@@ -1,4 +1,4 @@
-# 🩺 MediScribe  
+# 🩺 PulseScriptAI  
 ### Intelligent Medical Scribe & Clinical Safety Assistant
 
 ![Status](https://img.shields.io/badge/Status-Beta_Live-success?style=for-the-badge)
@@ -7,7 +7,7 @@
 ![License](https://img.shields.io/badge/License-MIT-orange?style=for-the-badge)
 
 > **Bridging the gap between a doctor’s voice and digital medical records.**  
-> MediScribe converts real-world multilingual consultations (Urdu / Hindi / English) into structured, professional clinical notes and prescriptions — with built-in patient safety checks.
+> PulseScriptAI converts real-world multilingual consultations (Urdu / Hindi / English) into structured, professional clinical notes and prescriptions — with built-in patient safety checks.
 
 ---
 
@@ -26,9 +26,9 @@ In high-volume clinics across South Asia (Pakistan & India), doctors face seriou
 
 ---
 
-## 💡 The Solution — MediScribe
+## 💡 The Solution — PulseScriptAI
 
-**MediScribe is not just a transcriber.**  
+**PulseScriptAI is not just a transcriber.**  
 It is an **AI clinical assistant** that understands conversation context, removes irrelevant speech, translates medical meaning, structures prescriptions, and actively warns about unsafe drug combinations.
 
 ---
