@@ -50,7 +50,7 @@ It is an **AI clinical assistant** that understands conversation context, remove
 
 | Doctor Dashboard | Real-Time Prescription Analysis |
 |---|---|
-| ![Dashboard](https://via.placeholder.com/600x300?text=Doctor+Dashboard) | ![Analysis](https://via.placeholder.com/600x300?text=Prescription+Analysis) |
+|<img width="500" height="566" alt="Screenshot 2026-02-09 234505" src="https://github.com/user-attachments/assets/181b24d5-2594-4e9d-b9c9-21b2aba0a35e" /> | ![Analysis](https://via.placeholder.com/600x300?text=Prescription+Analysis) |
 
 ---
 
