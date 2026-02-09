@@ -69,7 +69,7 @@ It is an **AI clinical assistant** that understands conversation context, remove
 - **Authentication:** JWT (OAuth2)
 
 ### Artificial Intelligence
-- **LLM:** Google Gemini 1.5 Pro
+- **LLM:** Google Gemini 3
 - **Technique:** System Prompting for
   - Medical translation
   - Clinical summarization
